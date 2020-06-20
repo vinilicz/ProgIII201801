@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+   db:
+     image: mysql
+     command: '--default-authentication-plugin=mysql_native_password'
+     volumes:
+      - dbDados:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: teste
+       MYSQL_DATABASE: teste
+       MYSQL_USER: teste
+       MYSQL_PASSWORD: teste
+
+   wordpress:
+     depends_on:
+       - db
+     image: wordpress
+     ports:
+       - "8080:80"
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: teste
+       WORDPRESS_DB_PASSWORD: teste
+       WORDPRESS_DB_NAME: teste
+
+volumes:
+   dbDados:
